@@ -4,7 +4,7 @@
    a. Username/Password\
    b. Create Account\
    c. SQL integration\
-   d. Account Type\
+   d. Account Type
    
 2. Nurse Portal\
    a. Search Patient Functionality\
