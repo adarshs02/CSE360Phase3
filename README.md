@@ -9,15 +9,15 @@
 2. Nurse Portal\
    a. Search Patient Functionality\
    b. Submit Form\
-   c. Messages\
+   c. Messages
    
 3. Doctor Portal\
    a. Search Patient Functionality (Same as Nurse)\
    b. Visits Button (Finishing the Form created by nurse)\
-   c. Messages\
+   c. Messages
     
 4. Patient Portal\
    a. Past Visits\
    b. Patient Info\
-   c. Messages\
+   c. Messages
 
