@@ -6,7 +6,7 @@
    c. SQL integration\
    d. Account Type
    
-2. Nurse Portal\
+2. Nurse Portal (Jr)\
    a. Search Patient Functionality\
    b. Submit Form\
    c. Messages
