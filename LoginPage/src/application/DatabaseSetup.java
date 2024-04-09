@@ -42,7 +42,7 @@ public class DatabaseSetup {
 	    public static void initializeDatabase() throws ClassNotFoundException {
 			String sql = "CREATE TABLE IF NOT EXISTS users (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "username TEXT UNIQUE NOT NULL,"	// first 5 fields are NOT NULL since they are required for all user accounts
+					+ "username TEXT UNIQUE NOT NULL,"	// first 2 fields are NOT NULL since they are required for all user accounts
 					+ "password TEXT NOT NULL);";
 			
 			// Connect to the user db file
