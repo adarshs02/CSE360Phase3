@@ -570,7 +570,7 @@ public class OpenMainUI {
 	}
 	
 	public static void MainUIStart() {
-		Stage mainUIstage = new Stage();
+		mainUIstage = new Stage();
 		mainUIstage.setTitle("Main Menu");
 		//create pane
 		GridPane mainUIGrid = new GridPane();
