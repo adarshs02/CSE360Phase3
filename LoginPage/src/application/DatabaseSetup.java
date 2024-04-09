@@ -38,6 +38,7 @@ public class DatabaseSetup {
 	    }
 
 	 // Method to create database
+	 // TODO need to add account type to database
 	    public static void initializeDatabase() throws ClassNotFoundException {
 			String sql = "CREATE TABLE IF NOT EXISTS users (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"

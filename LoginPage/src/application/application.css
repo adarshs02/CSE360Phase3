@@ -1,0 +1,14 @@
+
+
+.standard-button {
+    -fx-background-color: green; /* Green */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 12px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.standard-stage {
+    -fx-background-color: #ADD8E6; /* Light blue */
+    }
