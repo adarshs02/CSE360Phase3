@@ -21,3 +21,17 @@
    b. Patient Info\
    c. Messages
 
+## Setup
+1. Install [gradle](https://gradle.org/install/)
+2. Add this into Eclipse Run -> Run Configurations -> Arguements -> VM arguements: `--module-path /Users/alekkariniemi/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml` just change the module path to be the one you're using
+
+## Running in CMD/Terminal
+1. Navigate to directory via `cd`
+2. `gradle run`
+
+## Updating repo
+1. Just use github desktop install [here](https://desktop.github.com/)
+2. Clone repo using github desktop
+3. Make changes to code
+4. click the commit button and give a commit message
+5. click the push to main button
