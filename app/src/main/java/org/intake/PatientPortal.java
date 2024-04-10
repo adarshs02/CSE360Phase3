@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 
 public class PatientPortal {
 	
@@ -83,7 +84,7 @@ public class PatientPortal {
 	}
 	 
 	 public static Scene openContactInfo(Stage mainUIstage, Scene returnScreen) {
-			//create pane
+		//create pane
 			GridPane coninGrid = new GridPane();
 			coninGrid.setPadding(new Insets(10, 10, 10, 10));
 			coninGrid.setVgap(5);
@@ -108,6 +109,18 @@ public class PatientPortal {
 				mainUIstage.setScene(returnScreen);
 			});	
 			
+			TextField textBox = new TextField();
+			textBox.setPrefColumnCount(10);
+			textBox.getText();
+			GridPane.setConstraints(textBox, 1, 1);
+			textBox.setPrefHeight(150);
+			textBox.setPrefWidth(200);
+			coninGrid.getChildren().add(textBox);
+			
+			Button updateButton = new Button("UPDATE");
+			GridPane.setConstraints(updateButton, 1, 2);
+			coninGrid.getChildren().add(updateButton);
+			
 			//create scene
 			Scene contactInfoUI = new Scene(coninGrid, 1000, 600);
 					
@@ -115,7 +128,7 @@ public class PatientPortal {
 		}
 	 
 	 public static Scene openImmunizations(Stage mainUIstage, Scene returnScreen) {
-			//create pane
+		//create pane
 			GridPane immunGrid = new GridPane();
 			immunGrid.setPadding(new Insets(10, 10, 10, 10));
 			immunGrid.setVgap(5);
@@ -140,6 +153,18 @@ public class PatientPortal {
 				mainUIstage.setScene(returnScreen);
 			});	
 			
+			TextField textBox = new TextField();
+			textBox.setPrefColumnCount(10);
+			textBox.getText();
+			GridPane.setConstraints(textBox, 1, 1);
+			textBox.setPrefHeight(150);
+			textBox.setPrefWidth(200);
+			immunGrid.getChildren().add(textBox);
+			
+			Button updateButton = new Button("UPDATE");
+			GridPane.setConstraints(updateButton, 1, 2);
+			immunGrid.getChildren().add(updateButton);
+			
 			//create scene
 			Scene immunizaUI = new Scene(immunGrid, 1000, 600);
 					
@@ -147,7 +172,7 @@ public class PatientPortal {
 		}
 	 
 	 public static Scene openPastMed(Stage mainUIstage, Scene returnScreen) {
-			//create pane
+		//create pane
 			GridPane pastMedGrid = new GridPane();
 			pastMedGrid.setPadding(new Insets(10, 10, 10, 10));
 			pastMedGrid.setVgap(5);
@@ -171,6 +196,18 @@ public class PatientPortal {
 			returnButton.setOnAction(e ->{
 				mainUIstage.setScene(returnScreen);
 			});	
+			
+			TextField textBox = new TextField();
+			textBox.setPrefColumnCount(10);
+			textBox.getText();
+			GridPane.setConstraints(textBox, 1, 1);
+			textBox.setPrefHeight(150);
+			textBox.setPrefWidth(200);
+			pastMedGrid.getChildren().add(textBox);
+			
+			Button updateButton = new Button("UPDATE");
+			GridPane.setConstraints(updateButton, 1, 2);
+			pastMedGrid.getChildren().add(updateButton);
 			
 			//create scene
 			Scene pastMedUI = new Scene(pastMedGrid, 1000, 600);
