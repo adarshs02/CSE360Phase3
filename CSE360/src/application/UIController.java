@@ -4,13 +4,13 @@ public class UIController {
 	public static void showUI(String accountType) {
         switch (accountType) {
             case "DOCTOR":
-            	OpenMainUI.openDocView();
+            	DoctorPortal.openDocView();
             	break;
             case "NURSE":
-            	OpenMainUI.openNursePort();
+            	NursePortal.openNursePort();
                 break;
             case "PATIENT":
-                OpenMainUI.openPatPort();
+                PatientPortal.openPatPort();
                 break;
             default:
                 WindowUtil.showAlert("Error", "Unrecognized account type: " + accountType);

@@ -81,9 +81,7 @@ public class DatabaseSetup {
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "username TEXT UNIQUE NOT NULL,"	// first 5 fields are NOT NULL since they are required for all user accounts
 					+ "password TEXT NOT NULL,"
-	                + "account_type TEXT NOT NULL,"
-					+ "firstname TEXT,"
-	                + "lastname TEXT);";
+	                + "account_type TEXT NOT NULL);";
 			
 			// Connect to the user db file
 			try (Connection connection = DriverManager.getConnection(DB_URL); Statement stmt = connection.createStatement()) {
