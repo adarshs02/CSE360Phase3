@@ -22,7 +22,8 @@
    c. Messages
 
 ## Setup
-Install [gradle](https://gradle.org/install/)
+1. Install [gradle](https://gradle.org/install/)
+2. Add this into Run -> Run Configurations -> Arguements -> VM arguements: `--module-path /Users/alekkariniemi/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml` just change the module path to be the one you're using
 
 ## Running
 1. Navigate to directory

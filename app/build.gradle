@@ -18,6 +18,9 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
+    id 'java-library'
+    id 'groovy'
+    id 'eclipse'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
@@ -29,7 +32,7 @@ repositories {
 }
 
 javafx {
-    version = "21"
+    version = "22"
     // Found by eclipse
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
@@ -54,6 +57,13 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.12'
+
+    api 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    testImplementation 'junit:junit:4.12'
+    implementation 'org.codehaus.groovy:groovy-all:2.5.8'
+    testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -66,6 +76,24 @@ java {
 application {
     // Define the main class for the application.
     mainClass = 'org.intake.Main'
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls'
+        ]
+    }
+}
+
+run {
+    doFirst {
+        jvmArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls'
+        ]
+    }
 }
 
 tasks.named('test') {
