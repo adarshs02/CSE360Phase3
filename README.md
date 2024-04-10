@@ -21,3 +21,9 @@
    b. Patient Info\
    c. Messages
 
+## Setup
+Install [gradle](https://gradle.org/install/)
+
+## Running
+1. Navigate to directory
+2. `gradle run`
