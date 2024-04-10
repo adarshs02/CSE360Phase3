@@ -11,31 +11,19 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX21">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/drivers for sql/slf4j simple 1.7.36.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/drivers for sql/slf4j-api 1.7.36.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/drivers for sql/slf4j-extjavadoc.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/drivers for sql/sqlite-jdbc 3.45.2.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/Users/adarsh/Downloads/sqlite-jdbc 3.45.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/adarsh/Downloads/slf4j simple 1.7.36.jar"/>
+	<classpathentry kind="lib" path="/Users/adarsh/Downloads/slf4j-api 1.7.36.jar"/>
+	<classpathentry kind="lib" path="/Users/adarsh/Downloads/slf4j-extjavadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

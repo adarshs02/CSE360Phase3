@@ -24,11 +24,12 @@ public class DatabaseSetup {
 	    }
 
 	    // Method to create account in the database
-	    static boolean createAccount(String username, String password) {
+	    static boolean createAccount(String username, String password, String accountType) {
 	        try (Connection conn = DriverManager.getConnection(DB_URL);
-	            PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?)")) {
+	        	PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (username, password, account_type) VALUES (?, ?, ?)")) {
 	            stmt.setString(1, username);
 	            stmt.setString(2, password);
+	            stmt.setString(3, accountType);
 	            int rowsInserted = stmt.executeUpdate();
 	            return rowsInserted > 0;
 	        } catch (SQLException e) {
@@ -37,14 +38,13 @@ public class DatabaseSetup {
 	        }
 	    }
 
-	 // Method to create database
-	 // TODO need to add account type to database
+	   // Method to create database
 	    public static void initializeDatabase() throws ClassNotFoundException {
 			String sql = "CREATE TABLE IF NOT EXISTS users (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "username TEXT UNIQUE NOT NULL,"	// first 5 fields are NOT NULL since they are required for all user accounts
-					+ "password TEXT NOT NULL);";
-			
+					+ "password TEXT NOT NULL,"
+	                + "account_type TEXT NOT NULL);";
 			// Connect to the user db file
 			try (Connection connection = DriverManager.getConnection(DB_URL); Statement stmt = connection.createStatement()) {
 				stmt.execute(sql);

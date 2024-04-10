@@ -103,19 +103,29 @@ public class LoginPage {
         confirmPasswordInput.setPromptText("Confirm your password");
         GridPane.setConstraints(confirmPasswordInput, 1, 2);
 
+        Label accountTypeLabel = new Label("Account Type:");
+        GridPane.setConstraints(accountTypeLabel, 0, 3);
+
+        // Account Type Input (Dropdown menu)
+        ComboBox<String> accountTypeInput = new ComboBox<>();
+        accountTypeInput.getItems().addAll("Patient", "Doctor", "Nurse");
+        accountTypeInput.setPromptText("Select account type");
+        GridPane.setConstraints(accountTypeInput, 1, 3);
+
         // Create Account Button
         Button createAccountButton = new Button("Create Account");
         createAccountButton.getStyleClass().add("standard-button");
-        GridPane.setConstraints(createAccountButton, 1, 3);
-
+        GridPane.setConstraints(createAccountButton, 1, 4);
+        
         createAccountButton.setOnAction(event -> {
             String username = usernameInput.getText().trim();
             String password = passwordInput.getText().trim();
             String confirmPassword = confirmPasswordInput.getText().trim();
+            String accountType = accountTypeInput.getValue();
             if (!password.equals(confirmPassword)) {
             	WindowUtil.showAlert("Password Mismatch", "Passwords do not match. Please try again.");
             } else {
-                if (DatabaseSetup.createAccount(username, password)) {
+                if (DatabaseSetup.createAccount(username, password, accountType)) {
                 	WindowUtil.showAlert("Account Created", "Account created successfully.");
                     createAccountStage.close();
                 } else {
@@ -125,9 +135,9 @@ public class LoginPage {
         });
 
         grid.getChildren().addAll(usernameLabel, usernameInput, passwordLabel, passwordInput,
-                confirmPasswordLabel, confirmPasswordInput, createAccountButton);
+                confirmPasswordLabel, confirmPasswordInput, accountTypeLabel, accountTypeInput, createAccountButton);
 
-        Scene scene = new Scene(grid, 400, 200);
+        Scene scene = new Scene(grid, 400, 250);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         createAccountStage.setScene(scene);
         createAccountStage.setTitle("Create Account");
