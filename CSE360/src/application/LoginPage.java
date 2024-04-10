@@ -47,7 +47,15 @@ public class LoginPage {
                 String password = passwordInput.getText().trim();
                 if (DatabaseSetup.validateLogin(username, password)) {
                     System.out.println("Login successful!");
-                    OpenMainUI.MainUIStart();
+                    if (username.equals("Nurse")) {
+                    	NursePortal.openNursePort();
+                    }
+                    else if (username.equals("Patient")) {
+                    	PatientPortal.openPatPort();
+                    }
+                    else if (username.equals("Doctor")) {
+                    	DoctorPortal.openDocView();
+                    }
                     primaryStage.close();
                 } else {
                     WindowUtil.showAlert("Login Failed", "Invalid username or password!");
