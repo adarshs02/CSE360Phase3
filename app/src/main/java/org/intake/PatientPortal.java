@@ -41,7 +41,7 @@ public class PatientPortal {
 		GridPane.setConstraints(messagesButton, 10, 1);
 		patientPortalGrid.getChildren().add(messagesButton);
 		
-		Button contactInfoButton = new Button("Contact");
+		Button contactInfoButton = new Button("Contact Info");
 		GridPane.setConstraints(contactInfoButton, 10, 2);
 		patientPortalGrid.getChildren().add(contactInfoButton);
 		
