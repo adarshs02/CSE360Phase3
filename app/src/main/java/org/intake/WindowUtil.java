@@ -1,4 +1,4 @@
-package org.intake;
+package application;
 
 import javafx.scene.control.Alert;
 
