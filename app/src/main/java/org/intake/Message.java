@@ -1,4 +1,4 @@
-package application;
+package org.intake;
 
 public class Message {
 	public int msgID;

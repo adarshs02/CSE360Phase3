@@ -1,4 +1,4 @@
-package application;
+package org.intake;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

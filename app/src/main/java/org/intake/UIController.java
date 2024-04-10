@@ -1,4 +1,4 @@
-package application;
+package org.intake;
 
 public class UIController {
 	public static void showUI(String accountType) {

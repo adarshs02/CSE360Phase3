@@ -1,5 +1,5 @@
 
-package application;
+package org.intake;
 
 //The User class defines the attributes for Doctors, Nurses, and Patients
 public class User {
