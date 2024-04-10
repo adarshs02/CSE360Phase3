@@ -45,9 +45,10 @@ public class LoginPage {
             loginButton.setOnAction(event -> {
                 String username = usernameInput.getText().trim();
                 String password = passwordInput.getText().trim();
-                if (DatabaseSetup.validateLogin(username, password)) {
+                DatabaseSetup.LoginResult loginResult = DatabaseSetup.validateLogin(username, password);
+                if (loginResult.isSuccess()) {
                     System.out.println("Login successful!");
-                    OpenMainUI.MainUIStart();
+                    UIController.showUI(loginResult.getAccountType());
                     primaryStage.close();
                 } else {
                     WindowUtil.showAlert("Login Failed", "Invalid username or password!");
@@ -108,7 +109,7 @@ public class LoginPage {
 
         // Account Type Input (Dropdown menu)
         ComboBox<String> accountTypeInput = new ComboBox<>();
-        accountTypeInput.getItems().addAll("Patient", "Doctor", "Nurse");
+        accountTypeInput.getItems().addAll("PATIENT", "DOCTOR", "NURSE");
         accountTypeInput.setPromptText("Select account type");
         GridPane.setConstraints(accountTypeInput, 1, 3);
 
