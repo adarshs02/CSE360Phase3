@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.ComboBox;
 
 public class NursePortal {
 
@@ -155,6 +156,12 @@ public class NursePortal {
 		GridPane.setColumnSpan(immunilabel, 2);
 		nurseQsGrid.getChildren().add(immunilabel);
 		immunilabel.setText("Immunizations:");
+
+		final Label sendToLabel = new Label();
+		GridPane.setConstraints(sendToLabel, 0, 10);
+		GridPane.setColumnSpan(sendToLabel, 2);
+		nurseQsGrid.getChildren().add(sendToLabel);
+		sendToLabel.setText("Select Doctor to Send to:");
 		
 		//***********Text Fields*************
 		//define First name textfield
@@ -208,7 +215,6 @@ public class NursePortal {
 		presc.setPrefWidth(200);
 		nurseQsGrid.getChildren().add(presc);
 		
-		
 		TextField immuni = new TextField();
 		immuni.setPrefColumnCount(10);
 		immuni.getText();
@@ -216,6 +222,12 @@ public class NursePortal {
 		immuni.setPrefHeight(150);
 		immuni.setPrefWidth(200);
 		nurseQsGrid.getChildren().add(immuni);
+		
+		ComboBox<String> messageList = new ComboBox<>();
+        messageList.getItems().addAll("TEST");
+        messageList.setPromptText("Select Doctor");
+        GridPane.setConstraints(messageList, 5, 10);
+        nurseQsGrid.getChildren().add(messageList);
 		
 		//***********Buttons******************
 		//Add back button
@@ -244,6 +256,7 @@ public class NursePortal {
 	        String bloodPresIn = bloodPres.getText();
 	        String prescIn = presc.getText();
 	        String immuniIn = immuni.getText();
+	        //GRAB DOCTOR INFO
 		});	
 		
 		//create scene
