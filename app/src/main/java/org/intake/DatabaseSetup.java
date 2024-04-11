@@ -22,10 +22,10 @@ public class DatabaseSetup {
 	// Create/open msgs.db
 		private static final String MSG_DB_URL = "jdbc:sqlite:msgs.db";
 	
-	 static LoginResult validateLogin(String username, String password) {
+	 static LoginResult validateLogin(String userid, String password) {
 	        try (Connection conn = DriverManager.getConnection(DB_URL);
-	            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?")) {
-	            stmt.setString(1, username);
+	            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE userid = ? AND password = ?")) {
+	            stmt.setString(1, userid);
 	            stmt.setString(2, password);
 	            try (ResultSet rs = stmt.executeQuery()) {
 	                if (rs.next()) {
@@ -59,29 +59,16 @@ public class DatabaseSetup {
 	            return accountType;
 	        }
 	    }
-
-	    // Method to create account in the database
-	    static boolean createAccount(String username, String password, String accountType) {
-	        try (Connection conn = DriverManager.getConnection(DB_URL);
-	        	PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (username, password, account_type) VALUES (?, ?, ?)")) {
-	            stmt.setString(1, username);
-	            stmt.setString(2, password);
-	            stmt.setString(3, accountType);
-	            int rowsInserted = stmt.executeUpdate();
-	            return rowsInserted > 0;
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-	    }
-
-	   // Method to create database
+	    
 	    public static void initializeDatabase() throws ClassNotFoundException {
 			String sql = "CREATE TABLE IF NOT EXISTS users (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "username TEXT UNIQUE NOT NULL,"	// first 5 fields are NOT NULL since they are required for all user accounts
+					+ "firstname TEXT NOT NULL,"
+					+ "lastname TEXT NOT NULL,"
+					+ "dateOfBirth TEXT NULL,"
 					+ "password TEXT NOT NULL,"
-	                + "account_type TEXT NOT NULL);";
+	                + "account_type TEXT NOT NULL,"
+					+ "userid TEXT UNIQUE NULL);";
 			
 			// Connect to the user db file
 			try (Connection connection = DriverManager.getConnection(DB_URL); Statement stmt = connection.createStatement()) {
@@ -91,7 +78,25 @@ public class DatabaseSetup {
 				System.out.println(e.getMessage());
 			}
 		}
-	    
+
+	    // Method to create account in the database
+	    static boolean createAccount(String firstName, String lastName, String dateOfBirth, String password, String accountType, String userid) {
+	        try (Connection conn = DriverManager.getConnection(DB_URL);
+	        	PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (firstName, lastName, dateOfBirth, password, account_type, userid) VALUES (?, ?, ?, ?, ?, ?)")) {
+	            stmt.setString(1, firstName);
+	            stmt.setString(2, lastName);
+	            stmt.setString(3, dateOfBirth);
+	            stmt.setString(4, password);
+	            stmt.setString(5, accountType);
+	            stmt.setString(6, userid);
+	            int rowsInserted = stmt.executeUpdate();
+	            return rowsInserted > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
 	    public static void initializeMessageDatabase() {
 			String sql = "CREATE TABLE IF NOT EXISTS msgs (" 
 					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -101,7 +106,7 @@ public class DatabaseSetup {
 					+ "body TEXT,"
 					+ "timestamp TEXT,"
 					+ "thread_id INTEGER,"
-					+ "FOREIGN KEY (sender_id) REFERENCES users(id)," 		// Use two foreign keys to assign the message to a unique sender and recipient 
+					+ "FOREIGN KEY (sender_id) REFERENCES users(id)," // Use two foreign keys to assign the message to a unique sender and recipient 
 					+ "FOREIGN KEY (recipient_id) REFERENCES users(id));";	
 			
 			// Connect to the message db file
