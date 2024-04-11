@@ -1,5 +1,10 @@
 package org.intake;
 
+import java.util.List;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -104,6 +109,12 @@ public class NursePortal {
 		nurseQsGrid.getChildren().add(titlelabel);
 		titlelabel.setText("Patient Intake Form");
 		
+		final Label patientIDLabel = new Label();
+		GridPane.setConstraints(patientIDLabel, 0, 0);
+		GridPane.setColumnSpan(patientIDLabel, 2);
+		nurseQsGrid.getChildren().add(patientIDLabel);
+		patientIDLabel.setText("UserID:");
+		
 		final Label fnamelabel = new Label();
 		GridPane.setConstraints(fnamelabel, 0, 1);
 		GridPane.setColumnSpan(fnamelabel, 2);
@@ -166,6 +177,12 @@ public class NursePortal {
 		
 		//***********Text Fields*************
 		//define First name textfield
+		TextField patientID = new TextField();
+		patientID.setPrefColumnCount(10);
+		patientID.getText();
+		GridPane.setConstraints(patientID, 5, 0);
+		nurseQsGrid.getChildren().add(patientID);
+		
 		TextField fName = new TextField();
 		fName.setPrefColumnCount(10);
 		fName.getText();
@@ -224,11 +241,20 @@ public class NursePortal {
 		GridPane.setConstraints(immuni, 5, 9);
 		nurseQsGrid.getChildren().add(immuni);
 		
-		ComboBox<String> messageList = new ComboBox<>();
-        messageList.getItems().addAll("TEST");
-        messageList.setPromptText("Select Doctor");
-        GridPane.setConstraints(messageList, 5, 10);
-        nurseQsGrid.getChildren().add(messageList);
+		ComboBox<String> docList = new ComboBox<>();
+		List<User> doctorsList = DatabaseSetup.getDoctors();
+		List<String> doctorsListStrings = new ArrayList<>();
+		
+		for (User doctor : doctorsList) {
+		    // Access or manipulate your doctor object here
+		    String str = (doctor.getUsername() + " | " + doctor.getFullName()); // Example: print the doctor's information
+		    doctorsListStrings.add(str);
+		}
+		
+		docList.getItems().addAll(doctorsListStrings);
+		docList.setPromptText("Select Doctor");
+        GridPane.setConstraints(docList, 5, 10);
+        nurseQsGrid.getChildren().add(docList);
 		
 		//***********Buttons******************
 		//Add back button
@@ -248,6 +274,7 @@ public class NursePortal {
 		
 		//add confirm button functionality
 		confirmButton.setOnAction(e ->{
+			String patientIDIn = patientID.getText();
 			String firstName = fName.getText();
 	        String lastName = lName.getText();
 	        String dateob = dob.getText();
@@ -257,7 +284,30 @@ public class NursePortal {
 	        String bloodPresIn = bloodPres.getText();
 	        String prescIn = presc.getText();
 	        String immuniIn = immuni.getText();
+	        String docIn = docList.getValue();
+	        String docUserId = docIn.split(" \\| ")[0];
 	        //GRAB DOCTOR INFO
+	        VisitFormDatabase pendingVisitsDB = new VisitFormDatabase("PendingVisits");
+	        
+	        HashMap<String, String> visitForm = new HashMap<String, String>();
+	        visitForm.put("patientID", patientIDIn);
+			visitForm.put("firstName", firstName);
+			visitForm.put("lastName", lastName);
+			visitForm.put("dateob", dateob);
+			visitForm.put("weight", weightIn);
+			visitForm.put("height", heightIn);
+			visitForm.put("bodyTemp", bodyTempIn);
+			visitForm.put("bloodPres", bloodPresIn);
+			visitForm.put("presc", prescIn);
+			visitForm.put("immuni", immuniIn);
+			visitForm.put("phys", "");
+
+			try {
+				pendingVisitsDB.updateFileData(docUserId, patientIDIn, visitForm);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});	
 		
 		//create scene

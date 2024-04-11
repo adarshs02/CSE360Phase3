@@ -136,6 +136,24 @@ public class DatabaseSetup {
 		    return users;
 		}
 	    
+	    public static List<User> getDoctors() {
+			List<User> users = new ArrayList<>();
+			
+			String sql = "SELECT * FROM users WHERE account_type = 'DOCTOR'";
+			
+			// Make the connection to the db
+			try (Connection connection = DriverManager.getConnection(DB_URL); PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+				// Iterate through all users in the list have role type NURSE or DOCTOR and add them to the list
+		        while (rs.next()) {
+		        	Role role = Role.valueOf(rs.getString("account_type"));
+		            users.add(new User(rs.getString("userid"), rs.getString("password"), role, rs.getString("firstName"), rs.getString("lastName")));
+		        }
+		    } catch (SQLException e) {	// Print the error message if unable to connect
+		        System.err.println(e.getMessage());
+		    }
+		    return users;
+		}
+	    
 	    public static List<User> getAllUsers() {
 			List<User> users = new ArrayList<>();
 			

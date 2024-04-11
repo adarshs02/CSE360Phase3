@@ -1,0 +1,11 @@
+dateob:05
+firstName:alek
+lastName:kar
+patientID:alekp2002
+phys:
+immuni:covid
+weight:500
+bodyTemp:110 deg F
+bloodPres:200 psi
+presc:ibu
+height:7'
