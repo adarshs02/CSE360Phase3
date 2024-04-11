@@ -1,5 +1,8 @@
 package org.intake;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -59,7 +62,16 @@ public class DoctorPortal {
 		GridPane.setConstraints(pendingTestButton, 10, 10);
 		doctorGrid.getChildren().add(pendingTestButton);
 		//DROPDOWN OF PENDING VISITS
+		
+		VisitFormDatabase pendingVisitsDB = new VisitFormDatabase("PendingVisits");
         ComboBox<String> pendingList = new ComboBox<>();
+//        List<String> pendingVisitsList = pendingVisitsDB.getAllFilesInSubdirectory();
+//		
+//		for (User doctor : doctorsList) {
+//		    // Access or manipulate your doctor object here
+//		    String str = (doctor.getUsername() + " | " + doctor.getFullName()); // Example: print the doctor's information
+//		    doctorsListStrings.add(str);
+//		}
         pendingList.getItems().addAll("TEST");
         pendingList.setPromptText("Select Pending Visit");
         GridPane.setConstraints(pendingList, 6, 2);
