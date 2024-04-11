@@ -23,7 +23,7 @@
 
 ## Setup
 1. Install [gradle](https://gradle.org/install/)
-2. Add this into Eclipse Run -> Run Configurations -> Arguments -> VM arguements: `--module-path /Users/alekkariniemi/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml` just change the module path to be the one you're using
+2. Add this into Eclipse Run -> Run Configurations -> Arguments -> VM arguments: `--module-path /Users/alekkariniemi/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml` just change the module path to be the one you're using
 
 ## Running in CMD/Terminal
 1. Navigate to directory via `cd`
