@@ -1,7 +1,3 @@
-// Alek Kariniemi
-// Description: This class makes it easy to store and retrieve information from
-// text files.
-
 package org.intake;
 
 import java.io.*;
@@ -11,32 +7,42 @@ import java.util.*;
 public class VisitFormDatabase {
     
     private final String folderPath;
-    private final String folderName;
 
     public VisitFormDatabase(String folderPath) {
         this.folderPath = folderPath;
-        this.folderName = Paths.get(folderPath).getFileName().toString();
     }
 
-    // List all patient IDs
-    public List<String> getAllIdentifiers() throws IOException {
-        List<String> identifiers = new ArrayList<>();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folderPath), "*_" + folderName + ".txt")) {
+    // List all subdirectories
+    public List<String> getAllSubdirectories() throws IOException {
+        List<String> subdirectories = new ArrayList<>();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folderPath))) {
             for (Path entry : stream) {
-                String fileName = entry.getFileName().toString();
-                String identifier = fileName.split("_")[0];
-                identifiers.add(identifier);
+                if (Files.isDirectory(entry)) {
+                    subdirectories.add(entry.getFileName().toString());
+                }
             }
         }
-        return identifiers;
+        return subdirectories;
     }
 
-    // Retrieve patient information by ID
-    public Map<String, String> getFileData(String identifier) throws IOException {
-        File file = new File(folderPath, identifier + "_" + folderName + ".txt");
+    // List all files within a specific subdirectory
+    public List<String> getAllFilesInSubdirectory(String subdirectory) throws IOException {
+        List<String> files = new ArrayList<>();
+        Path subdirectoryPath = Paths.get(folderPath, subdirectory);
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(subdirectoryPath, "*.txt")) {
+            for (Path entry : stream) {
+                files.add(entry.getFileName().toString());
+            }
+        }
+        return files;
+    }
+
+    // Retrieve file data
+    public Map<String, String> getFileData(String subdirectory, String identifier) throws IOException {
+        Path filePath = Paths.get(folderPath, subdirectory, identifier + ".txt");
         Map<String, String> fileData = new HashMap<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = Files.newBufferedReader(filePath)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":", 2); // Split on the first colon
@@ -48,19 +54,45 @@ public class VisitFormDatabase {
 
         return fileData;
     }
+    
+    // Retrieve all the file data in a subdirectory
+    public List<Map<String, String>> getAllFileDataInSubdirectory(String subdirectory) throws IOException {
+        List<Map<String, String>> allFileData = new ArrayList<>();
+        Path subdirectoryPath = Paths.get(folderPath, subdirectory);
 
-    // Add or update patient information
-    public void updateFileData(String identifier, Map<String, String> info) throws IOException {
-        File file = new File(folderPath, identifier + "_" + folderName + ".txt");
-        
-        // Ensure directory exists
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(subdirectoryPath, "*.txt")) {
+            for (Path filePath : stream) {
+                Map<String, String> fileData = new HashMap<>();
+                try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split(":", 2); // Split on the first colon
+                        if (parts.length == 2) {
+                            fileData.put(parts[0].trim(), parts[1].trim());
+                        }
+                    }
+                } catch (IOException e) {
+                    System.err.println("Error reading file: " + filePath.getFileName());
+                    // Depending on your error handling policy, you might want to log the error,
+                    // throw the exception, return the partially completed list, or continue to the next file.
+                }
+                allFileData.add(fileData);
+            }
         }
 
-        //System.out.println("Writing to: " + file.getAbsolutePath()); // Diagnostic message
+        return allFileData;
+    }
+
+    // Add or update file data
+    public void updateFileData(String subdirectory, String identifier, Map<String, String> info) throws IOException {
+        Path subdirectoryPath = Paths.get(folderPath, subdirectory);
+        if (!Files.exists(subdirectoryPath)) {
+            Files.createDirectories(subdirectoryPath);
+        }
+
+        Path filePath = subdirectoryPath.resolve(identifier + ".txt");
         
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
             for (Map.Entry<String, String> entry : info.entrySet()) {
                 writer.write(entry.getKey() + ":" + entry.getValue());
                 writer.newLine();
@@ -68,20 +100,15 @@ public class VisitFormDatabase {
         }
     }
     
-    // Remove patient information by ID
-    public boolean removeFileData(String identifier) {
-        Path file = Paths.get(folderPath, identifier + "_" + folderName + ".txt");
-        try {
-            return Files.deleteIfExists(file);
-        } catch (IOException e) {
-            System.err.println("Error removing file: " + e.getMessage());
-            return false;
-        }
+    // Remove file data
+    public boolean removeFileData(String subdirectory, String identifier) throws IOException {
+        Path filePath = Paths.get(folderPath, subdirectory, identifier + ".txt");
+        return Files.deleteIfExists(filePath);
     }
 
-    // Search for a specific key within a patient's file
-    public String searchByKey(String identifier, String key) throws IOException {
-        Map<String, String> patientInfo = getFileData(identifier);
-        return patientInfo.getOrDefault(key, "Not Found");
+    // Search for a specific key within a file
+    public String searchByKey(String subdirectory, String identifier, String key) throws IOException {
+        Map<String, String> fileData = getFileData(subdirectory, identifier);
+        return fileData.getOrDefault(key, "Not Found");
     }
 }
