@@ -1,12 +1,12 @@
 # CSE360Phase3
 
-1. Login Page (Adarsh)\
+1. Login Page\
    a. Username/Password\
    b. Create Account\
    c. SQL integration\
    d. Account Type
    
-2. Nurse Portal (Jr)\
+2. Nurse Portal\
    a. Search Patient Functionality\
    b. Submit Form\
    c. Messages
