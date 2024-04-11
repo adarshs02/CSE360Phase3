@@ -13,7 +13,7 @@
    
 3. Doctor Portal\
    a. Search Patient Functionality (Same as Nurse)\
-   b. Visits Button (Finishing the Form created by nurse)\
+   b. Visits Button (Finishing the Form created by the nurse)\
    c. Messages
     
 4. Patient Portal\
