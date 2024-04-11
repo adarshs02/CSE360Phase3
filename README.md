@@ -30,7 +30,7 @@
 2. `gradle run`
 
 ## Updating repo
-1. Just use github desktop install [here](https://desktop.github.com/)
+1. Just use GitHub desktop install [here](https://desktop.github.com/)
 2. Clone repo using github desktop
 3. Make changes to code
 4. click the commit button and give a commit message
