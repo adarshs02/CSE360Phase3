@@ -96,7 +96,7 @@ public class LoginPage {
         GridPane.setConstraints(lastNameInput, 1, 1);
         
         // dateOfBirth Label
-        Label dateOfBirthLabel = new Label("Date of Birth:");
+        Label dateOfBirthLabel = new Label("mm/dd/yy");
         GridPane.setConstraints(dateOfBirthLabel, 0, 2);
 
         // dateOfBirth Input
