@@ -1,7 +1,10 @@
 package org.intake;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -65,20 +68,33 @@ public class DoctorPortal {
 		
 		VisitFormDatabase pendingVisitsDB = new VisitFormDatabase("PendingVisits");
         ComboBox<String> pendingList = new ComboBox<>();
-//        List<String> pendingVisitsList = pendingVisitsDB.getAllFilesInSubdirectory();
-//		
-//		for (User doctor : doctorsList) {
-//		    // Access or manipulate your doctor object here
-//		    String str = (doctor.getUsername() + " | " + doctor.getFullName()); // Example: print the doctor's information
-//		    doctorsListStrings.add(str);
-//		}
-        pendingList.getItems().addAll("TEST");
+        String userID = LoginPage.getUserID();
+        System.out.println("userID = " + userID);
+        
+        List<String> pendingVisitsList = new ArrayList<>();
+        try {
+        	pendingVisitsList = pendingVisitsDB.getAllFilesInSubdirectory(userID);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        List<String> dropDown = new ArrayList<>();
+        for (String patientID : pendingVisitsList) {
+		    // Access or manipulate your doctor object here
+		    String str = patientID.replace(".txt", ""); // Example: print the doctor's information
+		    dropDown.add(str);
+		}
+        		
+        pendingList.getItems().addAll(dropDown);
         pendingList.setPromptText("Select Pending Visit");
         GridPane.setConstraints(pendingList, 6, 2);
         doctorGrid.getChildren().add(pendingList);
+        
         Button openVisitButton = new Button("Open");
 		GridPane.setConstraints(openVisitButton, 6, 3);
 		doctorGrid.getChildren().add(openVisitButton);
+		
 		Button logoutButton = new Button("Logout");
 		GridPane.setConstraints(logoutButton, 6, 5);
 		doctorGrid.getChildren().add(logoutButton);
@@ -98,8 +114,9 @@ public class DoctorPortal {
 		});	
 		
 		//add pending Visit TEST button functionality
-		pendingTestButton.setOnAction(e ->{
-			doctorStage.setScene(openPendingVisit(doctorStage, doctorPortalUI));
+		openVisitButton.setOnAction(e ->{
+			String selectedVisit = pendingList.getValue();
+			doctorStage.setScene(openPendingVisit(doctorStage, doctorPortalUI, selectedVisit));
 		});	
 		//add logout button functionality
 		logoutButton.setOnAction(e ->{
@@ -111,7 +128,20 @@ public class DoctorPortal {
 		doctorStage.show();
 	}
 	
-	public static Scene openPendingVisit(Stage mainUIstage, Scene returnScreen) {
+	public static Scene openPendingVisit(Stage mainUIstage, Scene returnScreen, String selectedVisit) {
+		VisitFormDatabase pendingVisitsDB = new VisitFormDatabase("PendingVisits");
+		
+		Map<String, String> fileData = new HashMap<>();
+		String userID = LoginPage.getUserID();
+		try {
+        	fileData = pendingVisitsDB.getFileData(userID, selectedVisit);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		String patientIDStr = fileData.get("patientID");
+		
 		//create pane
 		GridPane pendingVisitGrid = new GridPane();
 		pendingVisitGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -125,6 +155,12 @@ public class DoctorPortal {
 		GridPane.setColumnSpan(titlelabel, 2);
 		pendingVisitGrid.getChildren().add(titlelabel);
 		titlelabel.setText("Patient Intake Form");
+		
+		final Label patientIDLabel = new Label();
+		GridPane.setConstraints(patientIDLabel, 0, 0);
+		GridPane.setColumnSpan(patientIDLabel, 2);
+		pendingVisitGrid.getChildren().add(patientIDLabel);
+		patientIDLabel.setText("UserID:");
 		
 		final Label fnamelabel = new Label();
 		GridPane.setConstraints(fnamelabel, 0, 1);
@@ -186,47 +222,59 @@ public class DoctorPortal {
 		pendingVisitGrid.getChildren().add(physicalFindlabel);
 		physicalFindlabel.setText("Physical Findings:");
 		
+		final Label datelabel = new Label();
+		GridPane.setConstraints(datelabel, 8, 7);
+		GridPane.setColumnSpan(datelabel, 2);
+		pendingVisitGrid.getChildren().add(datelabel);
+		datelabel.setText("Date:");
+		
 		//***********Text Fields*************
+		TextField patientID = new TextField();
+		patientID.setPrefColumnCount(10);
+		patientID.setText(fileData.get("patientID"));
+		GridPane.setConstraints(patientID, 5, 0);
+		pendingVisitGrid.getChildren().add(patientID);
+		
 		//define First name textfield
 		TextField fName = new TextField();
 		fName.setPrefColumnCount(10);
-		fName.getText();
+		fName.setText(fileData.get("firstName"));
 		GridPane.setConstraints(fName, 5, 1);
 		pendingVisitGrid.getChildren().add(fName);
 		
 		TextField lName = new TextField();
 		lName.setPrefColumnCount(10);
-		lName.getText();
+		lName.setText(fileData.get("lastName"));
 		GridPane.setConstraints(lName, 5, 2);
 		pendingVisitGrid.getChildren().add(lName);
 		
 		TextField dob = new TextField();
 		dob.setPrefColumnCount(10);
-		dob.getText();
+		dob.setText(fileData.get("dateob"));
 		GridPane.setConstraints(dob, 5, 3);
 		pendingVisitGrid.getChildren().add(dob);
 		
 		TextField weight = new TextField();
 		weight.setPrefColumnCount(10);
-		weight.getText();
+		weight.setText(fileData.get("weight"));
 		GridPane.setConstraints(weight, 5, 4);
 		pendingVisitGrid.getChildren().add(weight);
 		
 		TextField height = new TextField();
 		height.setPrefColumnCount(10);
-		height.getText();
+		height.setText(fileData.get("height"));
 		GridPane.setConstraints(height, 5, 5);
 		pendingVisitGrid.getChildren().add(height);
 		
 		TextField bodyTemp = new TextField();
 		bodyTemp.setPrefColumnCount(10);
-		bodyTemp.getText();
+		bodyTemp.setText(fileData.get("bodyTemp"));
 		GridPane.setConstraints(bodyTemp, 5, 6);
 		pendingVisitGrid.getChildren().add(bodyTemp);
 		
 		TextField bloodPres = new TextField();
 		bloodPres.setPrefColumnCount(10);
-		bloodPres.getText();
+		bloodPres.setText(fileData.get("bloodPres"));
 		GridPane.setConstraints(bloodPres, 5, 7);
 		pendingVisitGrid.getChildren().add(bloodPres);
 		
@@ -234,7 +282,7 @@ public class DoctorPortal {
 		presc.setPrefColumnCount(10); 
 		presc.setPrefHeight(150); 
 		presc.setWrapText(true); 
-		presc.getText();
+		presc.setText(fileData.get("presc"));
 		GridPane.setConstraints(presc, 5, 8);
 		pendingVisitGrid.getChildren().add(presc);
 		
@@ -242,7 +290,7 @@ public class DoctorPortal {
 		immuni.setPrefColumnCount(10); 
 		immuni.setPrefHeight(150); 
 		immuni.setWrapText(true); 
-		immuni.getText();
+		immuni.setText(fileData.get("immuni"));
 		GridPane.setConstraints(immuni, 5, 9);
 		pendingVisitGrid.getChildren().add(immuni);
 		
@@ -250,9 +298,14 @@ public class DoctorPortal {
 		phys.setPrefColumnCount(10); 
 		phys.setPrefHeight(150); 
 		phys.setWrapText(true); 
-		phys.getText();
+		phys.setText(fileData.get("phys"));
 		GridPane.setConstraints(phys, 10, 9);
 		pendingVisitGrid.getChildren().add(phys);
+		
+		TextField date = new TextField();
+		date.setPrefColumnCount(10);
+		GridPane.setConstraints(date, 10, 7);
+		pendingVisitGrid.getChildren().add(date);
 		
 		//***********Buttons******************
 		//Add back button
@@ -272,6 +325,7 @@ public class DoctorPortal {
 		
 		//add confirm button functionality
 		confirmButton.setOnAction(e ->{
+			String patientIDIn = patientIDStr;
 			String firstName = fName.getText();
 	        String lastName = lName.getText();
 	        String dateob = dob.getText();
@@ -281,7 +335,36 @@ public class DoctorPortal {
 	        String bloodPresIn = bloodPres.getText();
 	        String prescIn = presc.getText();
 	        String immuniIn = immuni.getText();
+	        String dateIn = date.getText();
 	        String physIn = phys.getText();
+	        
+	        VisitFormDatabase patientVisitsHistoryDB = new VisitFormDatabase("PatientVisitHistory");
+	        
+	        HashMap<String, String> visitForm = new HashMap<String, String>();
+	        visitForm.put("patientID", patientIDStr);
+			visitForm.put("firstName", firstName);
+			visitForm.put("lastName", lastName);
+			visitForm.put("dateob", dateob);
+			visitForm.put("weight", weightIn);
+			visitForm.put("height", heightIn);
+			visitForm.put("bodyTemp", bodyTempIn);
+			visitForm.put("bloodPres", bloodPresIn);
+			visitForm.put("presc", prescIn);
+			visitForm.put("immuni", immuniIn);
+			visitForm.put("date", dateIn);
+			visitForm.put("phys", physIn);
+			
+			System.out.println("visitForm = " + visitForm);
+			System.out.println("patientIDStr = " + patientIDStr);
+			
+			String dateStr = dateIn.replace("/", "-");
+
+			try {
+				patientVisitsHistoryDB.updateFileData(patientIDStr, dateStr, visitForm);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});	
 		
 		//create scene

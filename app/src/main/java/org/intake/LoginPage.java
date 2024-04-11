@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class LoginPage {
+	
+	public static String userID;
 
     public void start(Stage primaryStage) {
         try {
@@ -44,6 +46,7 @@ public class LoginPage {
 
             loginButton.setOnAction(event -> {
                 String username = usernameInput.getText().trim();
+                userID = username;
                 String password = passwordInput.getText().trim();
                 DatabaseSetup.LoginResult loginResult = DatabaseSetup.validateLogin(username, password);
                 if (loginResult.isSuccess()) {
@@ -178,5 +181,9 @@ public class LoginPage {
         String userID = firstName.toLowerCase() + lastNameInitial + yearOfBirth;
         
         return userID;
+    }
+    
+    public static String getUserID() {
+    	return userID;
     }
 }
