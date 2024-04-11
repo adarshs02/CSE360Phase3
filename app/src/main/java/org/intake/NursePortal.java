@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -207,20 +208,18 @@ public class NursePortal {
 		GridPane.setConstraints(bloodPres, 5, 7);
 		nurseQsGrid.getChildren().add(bloodPres);
 		
-		TextField presc = new TextField();
-		presc.setPrefColumnCount(10);
-		presc.getText();
+		TextArea presc = new TextArea();
+		presc.setPrefColumnCount(10); 
+		presc.setPrefHeight(150); 
+		presc.setWrapText(true); 
 		GridPane.setConstraints(presc, 5, 8);
-		presc.setPrefHeight(150);
-		presc.setPrefWidth(200);
 		nurseQsGrid.getChildren().add(presc);
 		
-		TextField immuni = new TextField();
-		immuni.setPrefColumnCount(10);
-		immuni.getText();
+		TextArea immuni = new TextArea();
+		immuni.setPrefColumnCount(10); 
+		immuni.setPrefHeight(150); 
+		immuni.setWrapText(true); 
 		GridPane.setConstraints(immuni, 5, 9);
-		immuni.setPrefHeight(150);
-		immuni.setPrefWidth(200);
 		nurseQsGrid.getChildren().add(immuni);
 		
 		ComboBox<String> messageList = new ComboBox<>();
