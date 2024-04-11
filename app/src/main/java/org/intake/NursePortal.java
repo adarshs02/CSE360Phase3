@@ -211,7 +211,8 @@ public class NursePortal {
 		TextArea presc = new TextArea();
 		presc.setPrefColumnCount(10); 
 		presc.setPrefHeight(150); 
-		presc.setWrapText(true); 
+		presc.setWrapText(true);
+		presc.getText();
 		GridPane.setConstraints(presc, 5, 8);
 		nurseQsGrid.getChildren().add(presc);
 		
@@ -219,6 +220,7 @@ public class NursePortal {
 		immuni.setPrefColumnCount(10); 
 		immuni.setPrefHeight(150); 
 		immuni.setWrapText(true); 
+		immuni.getText();
 		GridPane.setConstraints(immuni, 5, 9);
 		nurseQsGrid.getChildren().add(immuni);
 		

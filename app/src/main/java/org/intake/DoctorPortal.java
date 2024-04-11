@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -217,29 +218,30 @@ public class DoctorPortal {
 		GridPane.setConstraints(bloodPres, 5, 7);
 		pendingVisitGrid.getChildren().add(bloodPres);
 		
-		TextField presc = new TextField();
-		presc.setPrefColumnCount(10);
+		TextArea presc = new TextArea();
+		presc.setPrefColumnCount(10); 
+		presc.setPrefHeight(150); 
+		presc.setWrapText(true); 
 		presc.getText();
 		GridPane.setConstraints(presc, 5, 8);
-		presc.setPrefHeight(150);
-		presc.setPrefWidth(200);
 		pendingVisitGrid.getChildren().add(presc);
 		
-		TextField immuni = new TextField();
-		immuni.setPrefColumnCount(10);
+		TextArea immuni = new TextArea();
+		immuni.setPrefColumnCount(10); 
+		immuni.setPrefHeight(150); 
+		immuni.setWrapText(true); 
 		immuni.getText();
 		GridPane.setConstraints(immuni, 5, 9);
-		immuni.setPrefHeight(150);
-		immuni.setPrefWidth(200);
 		pendingVisitGrid.getChildren().add(immuni);
 		
-		TextField phys = new TextField();
-		phys.setPrefColumnCount(10);
+		TextArea phys = new TextArea();
+		phys.setPrefColumnCount(10); 
+		phys.setPrefHeight(150); 
+		phys.setWrapText(true); 
 		phys.getText();
 		GridPane.setConstraints(phys, 10, 9);
-		phys.setPrefHeight(150);
-		phys.setPrefWidth(200);
 		pendingVisitGrid.getChildren().add(phys);
+		
 		//***********Buttons******************
 		//Add back button
 		Button returnButton = new Button("Cancel");
