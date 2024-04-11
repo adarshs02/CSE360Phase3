@@ -19,7 +19,7 @@
 4. Patient Portal\
    a. Past Visits\
    b. Patient Info\
-   c. Messages
+   c. Messages 
 
 ## Setup
 1. Install [gradle](https://gradle.org/install/)
